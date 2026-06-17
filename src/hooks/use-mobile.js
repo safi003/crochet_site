@@ -1,0 +1,28 @@
+import * as React from "react";
+
+const MOBILE_BREAKPOINT = 1024;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(
+    typeof window !== "undefined"
+      ? window.innerWidth < MOBILE_BREAKPOINT
+      : false
+  );
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
+
+    window.addEventListener("resize", checkMobile);
+    checkMobile();
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
+export { useIsMobile };
+//# sourceMappingURL=use-mobile.js.map
