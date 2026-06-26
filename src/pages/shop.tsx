@@ -24,9 +24,9 @@ export function ShopPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <header className="text-center">
+      <header className="text-center ">
         <h1 className="font-serif text-4xl font-semibold text-foreground">{t.shop.title}</h1>
-        <p className="mt-2 text-muted-foreground">{t.shop.subtitle}</p>
+        <p className="mt-2 text-muted-foreground mb-5">{t.shop.subtitle}</p>
       </header>
 
       {/* Category filter */}
