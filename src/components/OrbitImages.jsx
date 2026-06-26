@@ -194,7 +194,7 @@ export default function OrbitImages({
       src={src}
       alt={`${altPrefix} ${index + 1}`}
       draggable={false}
-      className="w-full h-full object-contain"
+      className="w-full h-full object-contain rounded-full"
     />
   ));
 
