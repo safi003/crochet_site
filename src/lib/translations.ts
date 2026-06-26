@@ -41,6 +41,10 @@ export const translations = {
       subtitle: "Des créations uniques, crochetées une à une à la main.",
       all: "Tout",
       empty: "Aucun produit dans cette catégorie pour le moment.",
+      back: "Retour à la boutique",
+      viewDetails: "Voir le produit",
+      productNotFound: "Produit introuvable",
+      category: "Catégorie",
     },
     courses: {
       title: "Cours de crochet",
@@ -134,6 +138,10 @@ export const translations = {
       subtitle: "Unique creations, hand-crocheted one by one.",
       all: "All",
       empty: "No products in this category yet.",
+      back: "Back to shop",
+      viewDetails: "View product",
+      productNotFound: "Product not found",
+      category: "Category",
     },
     courses: {
       title: "Crochet courses",

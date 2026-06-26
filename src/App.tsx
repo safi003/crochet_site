@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import { CartDrawer } from "@/components/cart-drawer"
 import { HomePage } from "@/pages/home"
 import { ShopPage } from "@/pages/shop"
+import { ProductPage } from "@/pages/product"
 import { CoursesPage } from "@/pages/courses"
 import { GalleryPage } from "@/pages/gallery"
 import { AboutPage } from "@/pages/about"
@@ -28,6 +29,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/boutique" element={<ShopPage />} />
+          <Route path="/boutique/:id" element={<ProductPage />} />
           <Route path="/cours" element={<CoursesPage />} />
           <Route path="/galerie" element={<GalleryPage />} />
           <Route path="/a-propos" element={<AboutPage />} />
