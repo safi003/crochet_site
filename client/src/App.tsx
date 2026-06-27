@@ -10,6 +10,8 @@ import { CoursesPage } from "@/pages/courses"
 import { GalleryPage } from "@/pages/gallery"
 import { AboutPage } from "@/pages/about"
 import { ContactPage } from "@/pages/contact"
+import { LoginPage } from "@/pages/login"
+import { RegisterPage } from "@/pages/register"
 import { NotFoundPage } from "@/pages/not-found"
 import { Loader } from "@/components/loader"
 
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/galerie" element={<GalleryPage />} />
           <Route path="/a-propos" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/connexion" element={<LoginPage />} />
+          <Route path="/inscription" element={<RegisterPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

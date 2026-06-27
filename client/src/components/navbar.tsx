@@ -1,13 +1,15 @@
 import { Link, useLocation } from "react-router-dom"
 import { useState } from "react"
-import { ShoppingBag, Menu, X } from "lucide-react"
+import { ShoppingBag, Menu, X, User } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 import { useCart } from "@/context/cart-context"
+import { useAuth } from "@/context/auth-context"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const { t, lang, toggleLang } = useLanguage()
   const { count, setIsOpen } = useCart()
+  const { user, logout } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
@@ -54,6 +56,26 @@ export function Navbar() {
             {lang === "fr" ? "FR / EN" : "EN / FR"}
           </button>
 
+          {user ? (
+            <div className="hidden md:flex items-center gap-1">
+              <span className="text-sm text-muted-foreground">{user.name}</span>
+              <button
+                onClick={logout}
+                className="rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-destructive"
+              >
+                {t.auth.logout}
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/connexion"
+              className="hidden md:flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
+              aria-label={t.auth.login}
+            >
+              <User className="size-5" />
+            </Link>
+          )}
+
           <button
             onClick={() => setIsOpen(true)}
             className="relative flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
@@ -93,6 +115,35 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <hr className="my-1 border-border" />
+            {user ? (
+              <>
+                <span className="px-3 py-2 text-sm text-muted-foreground">{user.name}</span>
+                <button
+                  onClick={() => { logout(); setMobileOpen(false) }}
+                  className="rounded-lg px-3 py-2.5 text-left text-sm font-medium text-destructive transition-colors hover:bg-muted"
+                >
+                  {t.auth.logout}
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/connexion"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
+                >
+                  {t.auth.login}
+                </Link>
+                <Link
+                  to="/inscription"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
+                >
+                  {t.auth.register}
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       )}
