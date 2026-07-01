@@ -4,7 +4,7 @@ import { useAuth } from "@/context/auth-context"
 import { Upload, Trash2, PenLine, X, Check } from "lucide-react"
 import axios from "axios"
 
-const api = axios.create({ baseURL: "http://localhost:5000/api" })
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL })
 
 type GalleryImage = {
   _id: string

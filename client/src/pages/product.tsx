@@ -8,7 +8,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import type { Product } from "@/lib/data"
 
-const api = axios.create({ baseURL: "http://localhost:5000/api" })
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL })
 
 export function ProductPage() {
   const { id } = useParams<{ id: string }>()
