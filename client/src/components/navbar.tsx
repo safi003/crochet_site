@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import { useState } from "react"
-import { ShoppingBag, Menu, X, User } from "lucide-react"
+import { ShoppingBag, Menu, X, Shield } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 import { useCart } from "@/context/cart-context"
 import { useAuth } from "@/context/auth-context"
@@ -58,6 +58,15 @@ export function Navbar() {
 
           {user ? (
             <div className="hidden md:flex items-center gap-1">
+              {user.role === "admin" && (
+                <Link
+                  to="/admin"
+                  className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
+                  aria-label="Admin"
+                >
+                  <Shield className="size-5" />
+                </Link>
+              )}
               <span className="text-sm text-muted-foreground">{user.name}</span>
               <button
                 onClick={logout}
@@ -66,15 +75,7 @@ export function Navbar() {
                 {t.auth.logout}
               </button>
             </div>
-          ) : (
-            <Link
-              to="/connexion"
-              className="hidden md:flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
-              aria-label={t.auth.login}
-            >
-              <User className="size-5" />
-            </Link>
-          )}
+          ) : null}
 
           <button
             onClick={() => setIsOpen(true)}
@@ -118,6 +119,15 @@ export function Navbar() {
             <hr className="my-1 border-border" />
             {user ? (
               <>
+                {user.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
+                  >
+                    Admin
+                  </Link>
+                )}
                 <span className="px-3 py-2 text-sm text-muted-foreground">{user.name}</span>
                 <button
                   onClick={() => { logout(); setMobileOpen(false) }}
@@ -126,24 +136,7 @@ export function Navbar() {
                   {t.auth.logout}
                 </button>
               </>
-            ) : (
-              <>
-                <Link
-                  to="/connexion"
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
-                >
-                  {t.auth.login}
-                </Link>
-                <Link
-                  to="/inscription"
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
-                >
-                  {t.auth.register}
-                </Link>
-              </>
-            )}
+            ) : null}
           </div>
         </nav>
       )}

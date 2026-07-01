@@ -49,3 +49,24 @@ export const login = async (req, res) => {
 export const getMe = async (req, res) => {
   res.json(req.user);
 };
+
+export const setRole = async (req, res) => {
+  try {
+    const { email, role } = req.body;
+    if (!email || !role) {
+      return res.status(400).json({ message: "Email et rôle requis" });
+    }
+    if (!["user", "admin"].includes(role)) {
+      return res.status(400).json({ message: "Rôle invalide" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur introuvable" });
+    }
+    user.role = role;
+    await user.save();
+    res.json({ message: `Rôle de ${user.name} mis à jour : ${role}` });
+  } catch (err) {
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};

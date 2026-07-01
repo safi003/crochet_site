@@ -1,12 +1,14 @@
 import { useLanguage } from "@/context/language-context"
 import { HangingIdCard } from "@/components/lightswind/hangingidcard"
+import { FeatureTwo } from "@/components/animata/bento-grid/eight"
+
 export function AboutPage() {
   const { t } = useLanguage()
 
   const stats = [
-    { value: "10+", label: t.about.statsYears },
-    { value: "500+", label: t.about.statsPieces },
-    { value: "120+", label: t.about.statsStudents },
+    { value: 10, label: t.about.statsYears, suffix: "+ " },
+    { value: 500, label: t.about.statsPieces, suffix: "+ " },
+    { value: 120, label: t.about.statsStudents, suffix: "+ " },
   ]
 
   return (
@@ -37,12 +39,34 @@ export function AboutPage() {
       </div>
 
       <div className="mt-12 grid grid-cols-3 gap-4">
-        {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-secondary/40 p-6 text-center">
-            <p className="font-serif text-3xl font-semibold text-primary">{s.value}</p>
-            <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</p>
-          </div>
-        ))}
+        <FeatureTwo
+          targetValue={stats[0].value}
+          label={stats[0].label}
+          suffix={stats[0].suffix}
+          className="rounded-2xl border border-border bg-secondary/40 text-center"
+          textClassName="text-primary"
+        />
+        <FeatureTwo
+          targetValue={stats[1].value}
+          label={stats[1].label}
+          suffix={stats[1].suffix}
+          className="rounded-2xl border border-border bg-secondary/40 text-center"
+          textClassName="text-primary"
+        />
+        <FeatureTwo
+          targetValue={stats[2].value}
+          label={stats[2].label}
+          suffix={stats[2].suffix}
+          className="rounded-2xl border border-border bg-secondary/40 text-center"
+          textClassName="text-primary"
+          items={[
+            { name: "Marie", position: "Élève", image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=800&auto=format&fit=crop" },
+            { name: "Paul", position: "Élève", image: "https://images.unsplash.com/photo-1582610285985-a42d9193f2fd?q=80&w=800&auto=format&fit=crop" },
+            { name: "Sophie", position: "Élève", image: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=800&auto=format&fit=crop" },
+            { name: "Paul", position: "Élève", image: "https://images.unsplash.com/photo-1582610285985-a42d9193f2fd?q=80&w=800&auto=format&fit=crop" },
+            { name: "Sophie", position: "Élève", image: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=800&auto=format&fit=crop" },
+          ]}
+        />
       </div>
     </div>
   )

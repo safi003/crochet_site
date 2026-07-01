@@ -1,6 +1,7 @@
 import { useLanguage } from "@/context/language-context"
 import { galleryItems } from "@/lib/data"
 import { ThreeDImageRing } from "@/components/lightswind/3d-image-ring"
+
 export function GalleryPage() {
   const { t, lang } = useLanguage()
 

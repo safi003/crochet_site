@@ -69,7 +69,7 @@ export const translations = {
       p3: "À travers mes ateliers, je partage aussi ce savoir-faire pour que chacun puisse, à son tour, donner vie à ses idées maille après maille.",
       statsYears: "ans d'expérience",
       statsPieces: "pièces créées",
-      statsStudents: "élèves formés",
+      statsStudents: "élèves ",
     },
     contact: {
       title: "Contact",

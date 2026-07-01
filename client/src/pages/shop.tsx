@@ -6,17 +6,41 @@ import Stack from "@/components/Stack";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/cart-context";
 import { Plus, Check, Eye } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import type { Product } from "@/lib/data";
+
+const api = axios.create({ baseURL: "http://localhost:5000/api" })
 
 export function ShopPage() {
   const { t, lang } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCat = searchParams.get("cat") ?? "all";
+  const [galleryProductImages, setGalleryProductImages] = useState<Product[]>([])
+
+  useEffect(() => {
+    api
+      .get("/upload/gallery")
+      .then((res) => {
+        const imgs: Product[] = res.data.map((img: any, i: number) => ({
+          id: `gallery-upload-${img._id || i}`,
+          name: { fr: img.nameFr || "Nouvelle création", en: img.nameEn || "New creation" },
+          category: "galerie",
+          price: img.price ?? 0,
+          description: { fr: img.descriptionFr || "Ajoutée récemment", en: img.descriptionEn || "Recently added" },
+          image: img.url,
+        }))
+        setGalleryProductImages(imgs)
+      })
+      .catch(() => {})
+  }, [])
+
+  const allProducts = [...products, ...galleryProductImages]
 
   const filtered =
     activeCat === "all"
-      ? products
-      : products.filter((p) => p.category === activeCat);
+      ? allProducts
+      : allProducts.filter((p) => p.category === activeCat);
 
   const setCat = (slug: string) => {
     if (slug === "all") {
@@ -62,6 +86,17 @@ export function ShopPage() {
             {cat.name[lang]}
           </button>
         ))}
+        <button
+          onClick={() => setCat("galerie")}
+          className={cn(
+            "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+            activeCat === "galerie"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-background text-foreground hover:bg-muted",
+          )}
+        >
+          Galerie
+        </button>
       </div>
 
       <div className="">
@@ -118,9 +153,15 @@ function ShopProductCard({
 
   return (
     <div className="relative flex flex-col items-center border rounded-2xl border-border bg-background p-4 transition-shadow hover:shadow-lg">
-      <span className="absolute top-3 left-3 z-10 rounded-full bg-green-900 px-3 py-1 text-xs font-semibold text-white">
-        {product.price} €
-      </span>
+      {product.price > 0 ? (
+        <span className="absolute top-3 left-3 z-10 rounded-full bg-green-900 px-3 py-1 text-xs font-semibold text-white">
+          {product.price} €
+        </span>
+      ) : (
+        <span className="absolute top-3 left-3 z-10 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+          Nouveau
+        </span>
+      )}
       <Link to={`/boutique/${product.id}`} className="w-full aspect-square">
         <Stack
           sendToBackOnClick
@@ -142,19 +183,21 @@ function ShopProductCard({
       <p className="mt-1 text-xs text-muted-foreground text-center line-clamp-2">
         {product.description[lang]}
       </p>
-      <div className="mt-3 flex items-center gap-2 w-full px-2">
-        <button
-          onClick={handleAdd}
-          className="flex-1 flex items-center justify-center gap-1 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          {added ? (
-            <Check className="size-3.5" />
-          ) : (
-            <Plus className="size-3.5" />
-          )}
-          {added ? t.common.added : t.common.addToCart}
-        </button>
-      </div>
+      {product.price > 0 && (
+        <div className="mt-3 flex items-center gap-2 w-full px-2">
+          <button
+            onClick={handleAdd}
+            className="flex-1 flex items-center justify-center gap-1 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            {added ? (
+              <Check className="size-3.5" />
+            ) : (
+              <Plus className="size-3.5" />
+            )}
+            {added ? t.common.added : t.common.addToCart}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

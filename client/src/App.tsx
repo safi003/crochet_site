@@ -12,6 +12,7 @@ import { AboutPage } from "@/pages/about"
 import { ContactPage } from "@/pages/contact"
 import { LoginPage } from "@/pages/login"
 import { RegisterPage } from "@/pages/register"
+import { AdminPage } from "@/pages/admin"
 import { NotFoundPage } from "@/pages/not-found"
 import { Loader } from "@/components/loader"
 
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/connexion" element={<LoginPage />} />
           <Route path="/inscription" element={<RegisterPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
